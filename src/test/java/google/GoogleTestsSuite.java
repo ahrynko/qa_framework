@@ -6,6 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import pageobject.google.GoogleSearchPage;
 
 public class GoogleTestsSuite {
 
@@ -15,21 +16,19 @@ public class GoogleTestsSuite {
   public void initDriver(){
     System.setProperty("webdriver.chrome.driver","chromedriver.exe");  // key and путь к драйверу (если в idea ./idea/ch..exe)
     webDriver = new ChromeDriver(); //создали драйвер Chrome, который умеет работать с Chrome браузером
-    webDriver.manage().window().maximize();  // на весь экран
+    webDriver.manage().window().maximize();
   }
 
   @Test
-  public void checkGoogleSiteTitle(){
-    webDriver.get("https://www.google.com/");  //пока хардкодим
-    String title = webDriver.getTitle();  //
-    Assert.assertEquals("There is incorrect title diplayed","Google",title ); // title -то что на сайте
-
+  public void verifyGoogleSearchFunctionality(){
+    webDriver.get("https://www.google.com/");
+    GoogleSearchPage searchPage = new GoogleSearchPage(webDriver); //создаем объект страницы
+    searchPage.searchFor("rozetka");
   }
 
   @After
   public void shutDownDriver(){
     webDriver.close();
     webDriver.quit();
-
   }
 }
